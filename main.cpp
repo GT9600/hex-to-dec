@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 using namespace std;
 int hex2Dec(string const& hexV);
 int binToDecimal(const string & binaryString);
@@ -26,15 +27,17 @@ then multiply with the power, and add to decV */
     }
     return decV ;
 }
+//func shortens string from left to right until you have one number left in the first position then return that num
+int binToDecimal(const string & binaryString) {
+    if (binaryString.size() == 1) {
+        return binaryString[0] - '0'; //return first and only element in str
+    }
+    //get coefficient (1 or 0), multiply by 2 to the power of the position
+    int coEff = binaryString[0] - '0';
+    int unFound = coEff * pow(2, (binaryString.size() - 1));
 
-int binToDecimal(const string & binaryString){
-
-
-
-
-
+    return unFound + binToDecimal(binaryString.substr(1));
 }
-
 //main function tests
 
 int main(){
@@ -46,24 +49,18 @@ int main(){
         int convertedVal = hex2Dec(userHex);
         cout << convertedVal << endl;
 
+    string userBinary;
+    cout << "Enter binary number " << endl;
+    cin >> userBinary;
+    cout << userBinary << " converted to dec is.. " << endl;
+    int convertedBin = binToDecimal(userBinary);
+    cout << convertedBin << endl;
         cout << endl;
 
-        cout << "TESTS" << endl;
-        cout << "START TESTS FROM Q1" << endl;
-    string hexOne = "2B";
-    cout << (hex2Dec(hexOne));
-    cout << endl;
-    string hexTwo = "42D";
-    cout << (hex2Dec(hexTwo)) << endl;
-    string hexThree = "71E";
-    cout << (hex2Dec(hexThree));
-    cout << endl;
-    string hexFour = "89ABF";
-    cout << (hex2Dec(hexFour)) << endl << endl;
     string hexFive = "ZZ";
     cout << "Attempting to throw an exception.." << endl;
     cout << (hex2Dec(hexFive)) << endl; //test for exception handling
-    cout << "START TESTS FROM Q2 " << endl;
+
 
 
 }
